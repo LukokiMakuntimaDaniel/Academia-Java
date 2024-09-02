@@ -1,25 +1,64 @@
 package farmacia.co.ao.api.Routes;
 
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 
-public class PharmacistRoute {
-    public void index(HttpExchange exchange){
+import java.io.IOException;
+import java.io.OutputStream;
 
+public class PharmacistRoute implements HttpHandler {
+    @Override
+    public void handle(HttpExchange exchange) throws IOException {
+        String path = exchange.getRequestURI().getPath();
+        switch (path){
+            case "/api/pharmacist/getAll":
+                this.get(exchange);
+                break;
+            case "/api/pharmacist/save":
+                this.post(exchange);
+                break;
+            case "/api/pharmacist/delete/":
+                this.delete(exchange);
+                break;
+            case "/api/pharmacist/update":
+                this.update(exchange);
+                break;
+            default:
+                exchange.sendResponseHeaders(404,-1);
+                break;
+        }
     }
 
-    public void get(HttpExchange exchange){
-
+    private void get(HttpExchange exchange) throws IOException {
+        String response = "pegando todos os dados";
+        exchange.sendResponseHeaders(200, response.getBytes().length);
+        OutputStream os = exchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
 
-    public void post(HttpExchange exchange){
-
+    private void post(HttpExchange exchange) throws IOException {
+        String response = "inserindo todos os dados";
+        exchange.sendResponseHeaders(200, response.getBytes().length);
+        OutputStream os = exchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
 
-    public void delete(HttpExchange exchange){
-
+    private void delete(HttpExchange exchange) throws IOException {
+        String response = "delete todos os dados";
+        exchange.sendResponseHeaders(200, response.getBytes().length);
+        OutputStream os = exchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
 
-    public void update(HttpExchange exchange){
-
+    private void update(HttpExchange exchange) throws IOException {
+        String response = "actualizado todos os dados";
+        exchange.sendResponseHeaders(200, response.getBytes().length);
+        OutputStream os = exchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
+
 }
