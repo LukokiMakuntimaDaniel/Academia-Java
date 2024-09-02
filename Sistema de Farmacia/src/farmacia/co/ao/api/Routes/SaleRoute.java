@@ -6,59 +6,80 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class SaleRoute  implements HttpHandler {
+public class SaleRoute implements HttpHandler {
+
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String path = exchange.getRequestURI().getPath();
-        String response;
+        String method = exchange.getRequestMethod();
+
         switch (path) {
             case "/api/sale/getAll":
-                this.get(exchange);
+                if ("GET".equalsIgnoreCase(method)) {
+                    handleGet(exchange);
+                } else {
+                    sendMethodNotAllowedResponse(exchange);
+                }
                 break;
             case "/api/sale/save":
-                this.post(exchange);
+                if ("POST".equalsIgnoreCase(method)) {
+                    handlePost(exchange);
+                } else {
+                    sendMethodNotAllowedResponse(exchange);
+                }
                 break;
             case "/api/sale/delete/":
-                this.delete(exchange);
+                if ("DELETE".equalsIgnoreCase(method)) {
+                    handleDelete(exchange);
+                } else {
+                    sendMethodNotAllowedResponse(exchange);
+                }
                 break;
             case "/api/sale/update":
-                this.update(exchange);
+                if ("PUT".equalsIgnoreCase(method)) {
+                    handleUpdate(exchange);
+                } else {
+                    sendMethodNotAllowedResponse(exchange);
+                }
                 break;
             default:
-                exchange.sendResponseHeaders(404, -1);
+                sendNotFoundResponse(exchange);
                 break;
         }
     }
 
-    private void get(HttpExchange exchange) throws IOException {
-        String response = "pegando todos os dados";
-        exchange.sendResponseHeaders(200, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+    private void handleGet(HttpExchange exchange) throws IOException {
+        String response = "Fetching all sale data";
+        sendResponse(exchange, 200, response);
     }
 
-    private void post(HttpExchange exchange) throws IOException {
-        String response = "inserindo todos os dados";
-        exchange.sendResponseHeaders(200, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+    private void handlePost(HttpExchange exchange) throws IOException {
+        String response = "Saving sale data";
+        sendResponse(exchange, 200, response);
     }
 
-    private void delete(HttpExchange exchange) throws IOException {
-        String response = "delete todos os dados";
-        exchange.sendResponseHeaders(200, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+    private void handleDelete(HttpExchange exchange) throws IOException {
+        String response = "Deleting sale data";
+        sendResponse(exchange, 200, response);
     }
 
-    private void update(HttpExchange exchange) throws IOException {
-        String response = "actualizado todos os dados";
-        exchange.sendResponseHeaders(200, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+    private void handleUpdate(HttpExchange exchange) throws IOException {
+        String response = "Updating sale data";
+        sendResponse(exchange, 200, response);
+    }
+
+    private void sendNotFoundResponse(HttpExchange exchange) throws IOException {
+        exchange.sendResponseHeaders(404, -1);
+    }
+
+    private void sendMethodNotAllowedResponse(HttpExchange exchange) throws IOException {
+        exchange.sendResponseHeaders(405, -1);
+    }
+
+    private void sendResponse(HttpExchange exchange, int statusCode, String response) throws IOException {
+        exchange.sendResponseHeaders(statusCode, response.getBytes().length);
+        try (OutputStream os = exchange.getResponseBody()) {
+            os.write(response.getBytes());
+        }
     }
 }
