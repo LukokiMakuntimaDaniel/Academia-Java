@@ -26,7 +26,7 @@ public class UserRoute implements HttpHandler {
                 break;
             default:
                 exchange.sendResponseHeaders(404,-1);
-                break;
+
         }
     }
 
