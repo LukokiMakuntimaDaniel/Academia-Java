@@ -2,6 +2,7 @@ package farmacia.co.ao.api.Routes;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import farmacia.co.ao.api.Controller.CustomerController;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -51,27 +52,13 @@ public class CustomerRoute implements HttpHandler {
 
     private void handleGet(HttpExchange exchange) throws IOException {
         String response = "Fetching all customer data";
-        response = exchange.getRequestURI().getQuery();
-        Map<String, String> params = queryToMap(response);
-        response = params.get("ola");
+        CustomerController customerController = new CustomerController();
+        customerController.getallCustomer(exchange);
 
-        sendResponse(exchange, 200, response);
+        //sendResponse(exchange, 200, response);
     }
 
-    private Map<String, String> queryToMap(String query) {
-        Map<String, String> result = new HashMap<>();
-        if (query != null) {
-            for (String param : query.split("&")) {
-                String[] entry = param.split("=");
-                if (entry.length > 1) {
-                    result.put(entry[0], entry[1]);
-                } else {
-                    result.put(entry[0], "");
-                }
-            }
-        }
-        return result;
-    }
+
 
 
 
