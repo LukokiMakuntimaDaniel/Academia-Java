@@ -24,7 +24,7 @@ public class Index implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         String path = exchange.getRequestURI().getPath();
         for (Map.Entry<String, HttpHandler> route : routes.entrySet()) {
-            if (path.startsWith(route.getKey())) {
+            if (path.startsWith(route.getKey())){
                 Server.server.createContext(route.getKey(), route.getValue());
                 route.getValue().handle(exchange);
                 return;
