@@ -9,7 +9,7 @@ Este repositório contém uma coleção de projetos em Java, organizados em dife
 
 ## Estrutura do Repositório
 
-A estrutura do repositório está organizada em diferentes temas associado ao seu nivel, cada um representando um nível de aprendizado e um conjunto específico de tecnologias e práticas.
+A estrutura do repositório está organizada em diferentes temas relacionado ao java, cada um representando um nível de aprendizado e um conjunto específico de tecnologias e práticas.
 
 ```plaintext
 .

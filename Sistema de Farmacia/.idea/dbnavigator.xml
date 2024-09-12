@@ -6,7 +6,11 @@
   </component>
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
+<<<<<<< HEAD
+    <value-preview-text-wrapping value="false" />
+=======
     <value-preview-text-wrapping value="true" />
+>>>>>>> LukokiDev
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
