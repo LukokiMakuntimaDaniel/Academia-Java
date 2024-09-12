@@ -13,13 +13,9 @@ public class Server {
     public Server() throws IOException {
         InetSocketAddress inetSocketAddress = new InetSocketAddress(8000);
         server = HttpServer.create(inetSocketAddress, 0);
-
         server.createContext("/api/", new Index());
-
         server.setExecutor(null);
         server.start();
         System.out.println("Servidor iniciado na porta 8000");
     }
-
-
 }
